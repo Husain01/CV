@@ -3,11 +3,11 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../config/firebase";
 import { db } from "../../config/firebase";
 import { collection, doc, runTransaction, setDoc } from "firebase/firestore";
+import { useAuth } from "../../context/Auth/AuthContext";
 
 export const Signup = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
+  const { email, setEmail, password, setPassword, username, setUsername } =
+    useAuth();
   console.log(auth?.currentUser?.uid);
 
   const signUpHandler = async () => {
