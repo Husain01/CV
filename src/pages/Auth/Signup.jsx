@@ -1,22 +1,40 @@
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../config/firebase";
-import { db } from "../../config/firebase"; 
-import { doc, setDoc } from "firebase/firestore";
+import { db } from "../../config/firebase";
+import { collection, doc, runTransaction, setDoc } from "firebase/firestore";
 
 export const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-console.log(auth?.currentUser?.uid)
+  const [username, setUsername] = useState("");
+  console.log(auth?.currentUser?.uid);
+
   const signUpHandler = async () => {
+    const usernamesCol = collection(db, "usernames");
+    const userDoc = doc(usernamesCol, username);
     try {
-       const data =  await createUserWithEmailAndPassword(auth, email, password);
-       await setDoc(doc(db,"users", data.user.uid), {
-        
-       })
-    }
-    catch (error) {
-        console.error(error);
+      await runTransaction(db, async (transaction) => {
+        const existingDoc = await transaction.get(userDoc);
+
+        if (existingDoc.exists()) {
+          throw new Error("Username already exists!");
+        }
+        const data = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        transaction.set(userDoc, {
+          userID: data.user.uid,
+        });
+        await setDoc(doc(db, "users", data.user.uid), {
+          email: data.user.email,
+          username: username,
+        });
+      });
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -24,6 +42,15 @@ console.log(auth?.currentUser?.uid)
     <div>
       <h1>Signup</h1>
       <div>
+        <label htmlFor="text">Username</label>
+        <input
+          type="text"
+          placeholder="Enter Username"
+          id="email"
+          name="email"
+          required
+          onChange={(e) => setUsername(e.target.value)}
+        />
         <label htmlFor="email">Email</label>
         <input
           type="email"
@@ -36,7 +63,7 @@ console.log(auth?.currentUser?.uid)
         <label htmlFor="password">Password</label>
         <input
           type="password"
-          placeholder="password"
+          placeholder="Password"
           id="password"
           name="password"
           required
