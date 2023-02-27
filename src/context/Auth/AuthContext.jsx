@@ -1,14 +1,20 @@
-import {createContext, useContext, useState} from 'react'
+import {createContext, useContext, useEffect, useState} from 'react'
 
 const AuthContext = createContext()
 
 const AuthProvider = ({children}) => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [username, setUsername] = useState("");
+    const [username, setUsername] = useState()
+    const checkUser = () => {
+         setUsername(localStorage.getItem("username"))
+    }
+
+    useEffect(() => {
+      checkUser()
+    }, [])
+    
 
     return (
-        <AuthContext.Provider value={{email, setEmail, password, setPassword, username, setUsername}}>
+        <AuthContext.Provider value={{ username, setUsername}}>
             {children}
         </AuthContext.Provider>
     )

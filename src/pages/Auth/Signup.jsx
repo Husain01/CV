@@ -4,10 +4,13 @@ import { auth } from "../../config/firebase";
 import { db } from "../../config/firebase";
 import { collection, doc, runTransaction, setDoc } from "firebase/firestore";
 import { useAuth } from "../../context/Auth/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export const Signup = () => {
-  const { email, setEmail, password, setPassword, username, setUsername } =
-    useAuth();
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { username, setUsername } = useAuth();
   console.log(auth?.currentUser?.uid);
 
   const signUpHandler = async () => {
@@ -28,10 +31,12 @@ export const Signup = () => {
         transaction.set(userDoc, {
           userID: data.user.uid,
         });
+        localStorage.setItem("username", username);
         await setDoc(doc(db, "users", data.user.uid), {
           email: data.user.email,
           username: username,
         });
+        navigate("/welcome");
       });
     } catch (error) {
       console.error(error);
