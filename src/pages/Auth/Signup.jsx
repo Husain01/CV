@@ -32,6 +32,7 @@ export const Signup = () => {
           userID: data.user.uid,
         });
         localStorage.setItem("username", username);
+        localStorage.setItem("userID", data.user.uid);
         await setDoc(doc(db, "users", data.user.uid), {
           email: data.user.email,
           username: username,
@@ -54,7 +55,7 @@ export const Signup = () => {
           id="email"
           name="email"
           required
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e) => setUsername(e.target.value.trim())}
         />
         <label htmlFor="email">Email</label>
         <input
@@ -63,7 +64,7 @@ export const Signup = () => {
           id="email"
           name="email"
           required
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value.trim())}
         />
         <label htmlFor="password">Password</label>
         <input
@@ -72,7 +73,7 @@ export const Signup = () => {
           id="password"
           name="password"
           required
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value.trim())}
         />
         <button onClick={signUpHandler}>Signup</button>
       </div>
