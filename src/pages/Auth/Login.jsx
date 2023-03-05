@@ -1,19 +1,33 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
-import React, { useState } from "react";
-import { auth } from "../../config/firebase";
+import React, { useEffect, useState } from "react";
+import { auth, db } from "../../config/firebase";
+import { useNavigate } from "react-router-dom";
+import { doc, getDoc } from "firebase/firestore";
+import { useAuth } from "../../context/Auth/AuthContext";
 
 export const Login = () => {
+  const navigate = useNavigate()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const {username, setUsername} = useAuth()
+  
 
   const loginHandler = async() => {
     try {
       const data = await signInWithEmailAndPassword(auth, email, password)
-      console.log(data.user.uid)
+      console.log(data)
+      const loginRef = doc(db, "users", data.user.uid)
+      const loginDocSnap = await getDoc(loginRef)
+      console.log(loginDocSnap.data().username)
+      setUsername(localStorage.setItem("username", loginDocSnap.data().username))
+      if (loginDocSnap.exists()) {
+        navigate(`/${username}`)
+      }
     } catch (error) {
       console.error(error)
     }
   }
+  
 
   return (
     <div>

@@ -5,6 +5,8 @@ export const Logout = () => {
 
     const logoutHandler = () => {
         auth.signOut()
+        localStorage.removeItem("userID")
+        localStorage.removeItem("username")
     }
   return (  
     <div>
