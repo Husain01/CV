@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { auth, db } from "../../config/firebase";
 import { doc, setDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 export const Welcome = () => {
+  const navigate = useNavigate()
+  const username =  localStorage.getItem("username");
   const userID = localStorage.getItem("userID");
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -15,6 +18,7 @@ export const Welcome = () => {
       await setDoc(doc(db, "users", userID),{
         firstName, lastName, bio
       }, { merge: true })
+      navigate(`/${username}`)
     } catch (error) {
       console.error(error)
     }
