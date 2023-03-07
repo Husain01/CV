@@ -18,6 +18,7 @@ export const Login = () => {
       console.log(data)
       const loginRef = doc(db, "users", data.user.uid)
       const loginDocSnap = await getDoc(loginRef)
+      console.log(loginRef)
       console.log(loginDocSnap.data().username)
       setUsername(localStorage.setItem("username", loginDocSnap.data().username))
       if (loginDocSnap.exists()) {
