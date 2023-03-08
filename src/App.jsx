@@ -4,6 +4,7 @@ import { Login, Signup } from './pages/Auth'
 import { Logout } from './pages/Auth/Logout'
 import { Welcome } from './pages/Welcome/Welcome'
 import { Profile } from './pages/Profile/Profile'
+import { Edit } from './pages/Edit/Edit'
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
         <Route path='/logout' element={<Logout/>}/>
         <Route path='/welcome' element={<Welcome/>}/>
         <Route path='/:username' element={<Profile/>}/>
+        <Route path='/edit' element={<Edit/>}/>
       </Routes>
       
     </div>

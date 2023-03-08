@@ -1,12 +1,15 @@
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { db } from "../../config/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { useAuth } from "../../context/Auth/AuthContext";
 
 export const Profile = () => {
+  const navigate = useNavigate()
   const { username } = useParams();
-  // const {  userID } = useAuth();
+  const [userData, setUserData] = useState();
+  const [enableEdit, setEnableEdit] = useState(false)
+  const {  userID:localUserID } = useAuth();
   // const userID = localStorage.getItem("userID")
 
   //Gets the userID from the username from the params.
@@ -21,25 +24,44 @@ export const Profile = () => {
     }
   };
 
-  //fetches the user data 
+  //fetches the user data
   const fetchData = async () => {
     try {
-      const userID =await getUser()
-      console.log(userID)
+      const userID = await getUser();
+      console.log(userID);
       const loginRef = doc(db, "users", userID);
       const loginDocSnap = await getDoc(loginRef);
       if (loginDocSnap.exists()) {
-        const userData = loginDocSnap.data();
-        console.log(userData);
+        setUserData(loginDocSnap.data());
       }
     } catch (error) {
       console.error(error);
     }
   };
 
+  const enableEditHandler = async() => {
+    try {
+      const userID = await getUser();
+      console.log("local Storage:", localUserID)
+      console.log("From server:", userID)
+      if(localUserID === userID){
+        setEnableEdit(!enableEdit)
+      } 
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   useEffect(() => {
-    fetchData()
-  }, [])
+    fetchData();
+    enableEditHandler()
+  }, []);
+
+  console.log(userData);
+
+  const EditHandler = () => {
+    navigate('/edit')
+  }
 
   // useEffect(() => {
   //   getUser()
@@ -49,7 +71,15 @@ export const Profile = () => {
   //   }
   // }, []);
 
-  
+  return (
+    <div>
+      {userData && 
+      <h1>{`${userData.firstName} ${userData.lastName}`}</h1>
 
-  return <div>Hi {username}</div>;
+      }
+      {console.log(enableEdit)}
+      {enableEdit ? <button onClick={EditHandler}>Edit</button>: null}
+      
+    </div>
+  );
 };
