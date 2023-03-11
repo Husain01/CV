@@ -6,22 +6,35 @@ import { db } from "../../config/firebase";
 export const Edit = () => {
   const [userData, setUserData] = useState();
   const { userID } = useAuth();
+  const dataRef = doc(db, "users", userID);
   const [profileData, setProfileData] = useState({
     firstName: "",
     lastName: "",
     bio: "",
   });
+  const [educationFields, setEducationFields] = useState([]);
+
+  const fetchEduData = async () => {
+    try {
+      const eduDocSnap = await getDoc(dataRef);
+      if (eduDocSnap.exists()) {
+        const eduDoc = eduDocSnap.data();
+        setEducationFields(eduDoc.education || []);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   console.log(profileData);
 
   //fetches the user data
   const fetchData = async () => {
     try {
-      console.log(userID);
-      const loginRef = doc(db, "users", userID);
-      const loginDocSnap = await getDoc(loginRef);
-      if (loginDocSnap.exists()) {
-        const profData = loginDocSnap.data();
-        setUserData(loginDocSnap.data());
+      const profileDocSnap = await getDoc(dataRef);
+      if (profileDocSnap.exists()) {
+        const profData = profileDocSnap.data();
+        setUserData(profileDocSnap.data());
         setProfileData({
           firstName: profData.firstName,
           lastName: profData.lastName,
@@ -35,10 +48,9 @@ export const Edit = () => {
 
   useEffect(() => {
     fetchData();
+    fetchEduData();
   }, []);
 
-  console.log(userData);
-  console.log(profileData);
 
   const handleProfileChange = (e) => {
     setProfileData({
@@ -48,12 +60,11 @@ export const Edit = () => {
   };
 
   const { firstName, lastName, bio } = profileData;
-  console.log(firstName, lastName, bio);
   const handleProfileSubmit = async (e) => {
     e.preventDefault();
     try {
       await setDoc(
-        doc(db, "users", userID),
+        dataRef,
         {
           firstName,
           lastName,
@@ -66,12 +77,46 @@ export const Edit = () => {
     }
   };
 
+  const handleEducationChange = (index, event) => {
+    const values = [...educationFields];
+    values[index][event.target.name] = event.target.value;
+    setEducationFields(values);
+  };
+
+  const handleAddEducation = () => {
+    setEducationFields([
+      ...educationFields,
+      { institution: "", degree: "", field: "", startYear: "", endYear: "" },
+    ]);
+  };
+
+  const handleSaveEducation = async (e) => {
+    e.preventDefault();
+    try {
+      await setDoc(dataRef, { education: educationFields }, { merge: true });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleRemoveEducation = async (index) => {
+    const newEducationFields = [...educationFields];
+    newEducationFields.splice(index, 1);
+    const newData = { education: newEducationFields };
+    try {
+      await updateDoc(dataRef, newData, { merge: true });
+      setEducationFields(newEducationFields);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
-      {userData && (
+      {profileData && (
         <div>
           <h1>Edit Profile</h1>
-          <form>
+          <div>
             <input
               type="text"
               value={profileData.firstName}
@@ -93,10 +138,68 @@ export const Edit = () => {
             <button type="submit" onClick={handleProfileSubmit}>
               Save
             </button>
-            {console.log(profileData)}
-          </form>
+          </div>
         </div>
       )}
+      {educationFields &&
+        educationFields.map((field, index) => (
+          <div key={index}>
+            <label htmlFor={`institution-${index}`}>Institution</label>
+            <input
+              type="text"
+              name="institution"
+              value={field.institution}
+              onChange={(e) => handleEducationChange(index, e)}
+              id={`institution-${index}`}
+            />
+
+            <label htmlFor={`degree-${index}`}>Degree</label>
+            <input
+              type="text"
+              name="degree"
+              value={field.degree}
+              onChange={(e) => handleEducationChange(index, e)}
+              id={`degree-${index}`}
+            />
+
+            <label htmlFor={`field-${index}`}>Field</label>
+            <input
+              type="text"
+              name="field"
+              value={field.field}
+              onChange={(e) => handleEducationChange(index, e)}
+              id={`field-${index}`}
+            />
+
+            <label htmlFor={`startYear-${index}`}>Start Year</label>
+            <input
+              type="text"
+              name="startYear"
+              value={field.startYear}
+              onChange={(e) => handleEducationChange(index, e)}
+              id={`startYear-${index}`}
+            />
+
+            <label htmlFor={`endYear-${index}`}>End Year</label>
+            <input
+              type="text"
+              name="endYear"
+              value={field.endYear}
+              onChange={(e) => handleEducationChange(index, e)}
+              id={`endYear-${index}`}
+            />
+
+            <button type="button" onClick={() => handleRemoveEducation(index)}>
+              Remove
+            </button>
+          </div>
+        ))}
+      <button type="button" onClick={handleSaveEducation}>
+        Save Education
+      </button>
+      <button type="button" onClick={handleAddEducation}>
+        Add Education
+      </button>
     </>
   );
 };
