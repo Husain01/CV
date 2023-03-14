@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/Auth/AuthContext";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../config/firebase";
+import { Education } from "../../components/Education/Education";
 
 export const Edit = () => {
   const [userData, setUserData] = useState();
@@ -113,7 +114,7 @@ export const Edit = () => {
 
   return (
     <>
-      {profileData && (
+      {userData && (
         <div>
           <h1>Edit Profile</h1>
           <div>
@@ -139,9 +140,10 @@ export const Edit = () => {
               Save
             </button>
           </div>
+          <Education/>
         </div>
       )}
-      {educationFields &&
+      {/* {educationFields &&
         educationFields.map((field, index) => (
           <div key={index}>
             <label htmlFor={`institution-${index}`}>Institution</label>
@@ -199,7 +201,8 @@ export const Edit = () => {
       </button>
       <button type="button" onClick={handleAddEducation}>
         Add Education
-      </button>
+      </button> */}
+      
     </>
   );
 };
