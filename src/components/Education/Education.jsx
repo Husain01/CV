@@ -1,4 +1,4 @@
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
 import { db } from '../../config/firebase';
 import { useAuth } from '../../context/Auth/AuthContext';
@@ -42,6 +42,7 @@ export const Education = () => {
         e.preventDefault();
         try {
           await setDoc(dataRef, { education: educationFields }, { merge: true });
+          console.log("Successfully updated")
         } catch (error) {
           console.error(error);
         }
@@ -54,6 +55,7 @@ export const Education = () => {
         try {
           await updateDoc(dataRef, newData, { merge: true });
           setEducationFields(newEducationFields);
+          console.log("Successfully Removed")
         } catch (error) {
           console.error(error);
         }

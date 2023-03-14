@@ -21,6 +21,7 @@ export const Signup = () => {
         const existingDoc = await transaction.get(userDoc);
 
         if (existingDoc.exists()) {
+          alert("Username already exists!")
           throw new Error("Username already exists!");
         }
         const data = await createUserWithEmailAndPassword(

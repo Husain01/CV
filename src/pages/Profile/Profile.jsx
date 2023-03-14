@@ -73,9 +73,10 @@ export const Profile = () => {
 
   return (
     <div>
-      {userData && 
+      {userData && <>
       <h1>{`${userData.firstName} ${userData.lastName}`}</h1>
-
+        <p>{userData.bio}</p>
+      </> 
       }
       {console.log(enableEdit)}
       {enableEdit ? <button onClick={EditHandler}>Edit</button>: null}

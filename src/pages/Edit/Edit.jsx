@@ -3,6 +3,7 @@ import { useAuth } from "../../context/Auth/AuthContext";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../config/firebase";
 import { Education } from "../../components/Education/Education";
+import { Projects } from "../../components/Projects/Projects";
 
 export const Edit = () => {
   const [userData, setUserData] = useState();
@@ -140,7 +141,10 @@ export const Edit = () => {
               Save
             </button>
           </div>
+          <h2>Education</h2>
           <Education/>
+          <h2>Projects</h2>
+          <Projects/>
         </div>
       )}
       {/* {educationFields &&
