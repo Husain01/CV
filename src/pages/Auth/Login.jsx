@@ -20,7 +20,9 @@ export const Login = () => {
       const loginDocSnap = await getDoc(loginRef)
       console.log(loginRef)
       console.log(loginDocSnap.data().username)
+      console.log(data.user.uid)
       setUsername(localStorage.setItem("username", loginDocSnap.data().username))
+      localStorage.setItem("userID", data.user.uid);
       if (loginDocSnap.exists()) {
         navigate(`/${username}`)
       }

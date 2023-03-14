@@ -11,7 +11,7 @@ export const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { username, setUsername } = useAuth();
-  console.log(auth?.currentUser?.uid);
+  // console.log(auth?.currentUser?.uid);
 
   const signUpHandler = async () => {
     const usernamesCol = collection(db, "usernames");

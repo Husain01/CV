@@ -5,12 +5,14 @@ import { Logout } from './pages/Auth/Logout'
 import { Welcome } from './pages/Welcome/Welcome'
 import { Profile } from './pages/Profile/Profile'
 import { Edit } from './pages/Edit/Edit'
+import { Home } from './pages/Home/Home'
 
 function App() {
 
   return (
     <div className="App">
       <Routes>
+        <Route path='/' element={<Home/>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/signup' element={<Signup/>}/>
         <Route path='/logout' element={<Logout/>}/>
