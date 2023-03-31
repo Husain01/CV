@@ -46,7 +46,7 @@ export const Profile = () => {
       console.log("local Storage:", localUserID);
       console.log("From server:", userID);
       if (localUserID === userID) {
-        setEnableEdit(!enableEdit);
+        setEnableEdit(true);
       }
     } catch (error) {
       console.error(error);
@@ -75,14 +75,17 @@ export const Profile = () => {
   return (
     <div className="profile">
       <div className="profile-container">
-        {userData && (
-          <>
-            <h1>{`${userData.firstName} ${userData.lastName}`}</h1>
-            <p>{userData.bio}</p>
-          </>
-        )}
-        {console.log(enableEdit)}
-        {enableEdit ? <button onClick={EditHandler}>Edit</button> : null}
+        <div className="profile-demography">
+          {userData && (
+            <>
+              <h1>{`${userData.firstName} ${userData.lastName}`}</h1>
+              <p>{userData.bio}</p>
+            </>
+          )}
+          {console.log(enableEdit)}
+          {enableEdit ? <button onClick={EditHandler}>Edit</button> : null}
+        </div>
+        <div className="profile-skills"></div>
       </div>
     </div>
   );

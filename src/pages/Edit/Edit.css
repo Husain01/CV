@@ -1,4 +1,4 @@
-.profile{
+.edit{
     background-color: #eefbfd;
     min-height: 100vh;
     display: flex;
@@ -6,7 +6,7 @@
     flex-direction: column;
 }
 
-.profile-container{
+.edit-container{
     display: flex;
     flex-direction: column;
     min-height: 95vh;

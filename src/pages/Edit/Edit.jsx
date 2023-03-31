@@ -4,6 +4,7 @@ import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../config/firebase";
 import { Education } from "../../components/Education/Education";
 import { Projects } from "../../components/Projects/Projects";
+import './Edit.css'
 
 export const Edit = () => {
   const [userData, setUserData] = useState();
@@ -79,44 +80,45 @@ export const Edit = () => {
     }
   };
 
-  const handleEducationChange = (index, event) => {
-    const values = [...educationFields];
-    values[index][event.target.name] = event.target.value;
-    setEducationFields(values);
-  };
+  // const handleEducationChange = (index, event) => {
+  //   const values = [...educationFields];
+  //   values[index][event.target.name] = event.target.value;
+  //   setEducationFields(values);
+  // };
 
-  const handleAddEducation = () => {
-    setEducationFields([
-      ...educationFields,
-      { institution: "", degree: "", field: "", startYear: "", endYear: "" },
-    ]);
-  };
+  // const handleAddEducation = () => {
+  //   setEducationFields([
+  //     ...educationFields,
+  //     { institution: "", degree: "", field: "", startYear: "", endYear: "" },
+  //   ]);
+  // };
 
-  const handleSaveEducation = async (e) => {
-    e.preventDefault();
-    try {
-      await setDoc(dataRef, { education: educationFields }, { merge: true });
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const handleSaveEducation = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     await setDoc(dataRef, { education: educationFields }, { merge: true });
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
-  const handleRemoveEducation = async (index) => {
-    const newEducationFields = [...educationFields];
-    newEducationFields.splice(index, 1);
-    const newData = { education: newEducationFields };
-    try {
-      await updateDoc(dataRef, newData, { merge: true });
-      setEducationFields(newEducationFields);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const handleRemoveEducation = async (index) => {
+  //   const newEducationFields = [...educationFields];
+  //   newEducationFields.splice(index, 1);
+  //   const newData = { education: newEducationFields };
+  //   try {
+  //     await updateDoc(dataRef, newData, { merge: true });
+  //     setEducationFields(newEducationFields);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   return (
     <>
       {userData && (
-        <div>
+        <div className="edit">
+          <div className="edit-container">
           <h1>Edit Profile</h1>
           <div>
             <input
@@ -145,6 +147,8 @@ export const Edit = () => {
           <Education/>
           <h2>Projects</h2>
           <Projects/>
+          </div>
+          
         </div>
       )}
       {/* {educationFields &&
