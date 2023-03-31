@@ -3,13 +3,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import { db } from "../../config/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { useAuth } from "../../context/Auth/AuthContext";
+import "./Profile.css";
 
 export const Profile = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { username } = useParams();
   const [userData, setUserData] = useState();
-  const [enableEdit, setEnableEdit] = useState(false)
-  const {  userID:localUserID } = useAuth();
+  const [enableEdit, setEnableEdit] = useState(false);
+  const { userID: localUserID } = useAuth();
   // const userID = localStorage.getItem("userID")
 
   //Gets the userID from the username from the params.
@@ -39,29 +40,29 @@ export const Profile = () => {
     }
   };
 
-  const enableEditHandler = async() => {
+  const enableEditHandler = async () => {
     try {
       const userID = await getUser();
-      console.log("local Storage:", localUserID)
-      console.log("From server:", userID)
-      if(localUserID === userID){
-        setEnableEdit(!enableEdit)
-      } 
+      console.log("local Storage:", localUserID);
+      console.log("From server:", userID);
+      if (localUserID === userID) {
+        setEnableEdit(!enableEdit);
+      }
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   useEffect(() => {
     fetchData();
-    enableEditHandler()
+    enableEditHandler();
   }, []);
 
   console.log(userData);
 
   const EditHandler = () => {
-    navigate('/edit')
-  }
+    navigate("/edit");
+  };
 
   // useEffect(() => {
   //   getUser()
@@ -72,15 +73,17 @@ export const Profile = () => {
   // }, []);
 
   return (
-    <div>
-      {userData && <>
-      <h1>{`${userData.firstName} ${userData.lastName}`}</h1>
-        <p>{userData.bio}</p>
-      </> 
-      }
-      {console.log(enableEdit)}
-      {enableEdit ? <button onClick={EditHandler}>Edit</button>: null}
-      
+    <div className="profile">
+      <div className="profile-container">
+        {userData && (
+          <>
+            <h1>{`${userData.firstName} ${userData.lastName}`}</h1>
+            <p>{userData.bio}</p>
+          </>
+        )}
+        {console.log(enableEdit)}
+        {enableEdit ? <button onClick={EditHandler}>Edit</button> : null}
+      </div>
     </div>
   );
 };

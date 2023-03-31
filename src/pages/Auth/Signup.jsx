@@ -4,7 +4,8 @@ import { auth } from "../../config/firebase";
 import { db } from "../../config/firebase";
 import { collection, doc, runTransaction, setDoc } from "firebase/firestore";
 import { useAuth } from "../../context/Auth/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import "./Auth.css";
 
 export const Signup = () => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ export const Signup = () => {
         const existingDoc = await transaction.get(userDoc);
 
         if (existingDoc.exists()) {
-          alert("Username already exists!")
+          alert("Username already exists!");
           throw new Error("Username already exists!");
         }
         const data = await createUserWithEmailAndPassword(
@@ -46,15 +47,15 @@ export const Signup = () => {
   };
 
   return (
-    <div>
-      <h1>Signup</h1>
-      <div>
+    <div className="auth">
+      <div className="auth-container">
+        <h1 className="auth-heading">Signup</h1>
         <label htmlFor="text">Username</label>
         <input
           type="text"
           placeholder="Enter Username"
-          id="email"
-          name="email"
+          id="text"
+          name="text"
           required
           onChange={(e) => setUsername(e.target.value.trim())}
         />
@@ -76,7 +77,10 @@ export const Signup = () => {
           required
           onChange={(e) => setPassword(e.target.value.trim())}
         />
-        <button onClick={signUpHandler}>Signup</button>
+        <button className="auth-btn" onClick={signUpHandler}>Signup</button>
+        <Link to='/login'>
+        <p>Already have an account? Sign in</p>
+        </Link>
       </div>
     </div>
   );

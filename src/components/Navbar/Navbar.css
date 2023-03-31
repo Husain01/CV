@@ -1,0 +1,87 @@
+.navbar {
+  width: 100%;
+  /* background-color: #f4fded; */
+  background-color: #eefbfd;
+  /* background-color: #f1f1f1; */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 5rem;
+  position: sticky;
+  top: 0;
+}
+
+.navbar__logo{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.navbar__logo h1{
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.navbar img {
+  width: 15rem;
+  margin-left: 3rem;
+  cursor: pointer;
+}
+
+.navbar__auth-btns {
+  display: flex;
+  gap: 1rem;
+  margin-right: 3rem;
+  align-items: center;
+}
+
+.navbar__auth-btns button {
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.navbar__login-btn {
+  border: none;
+  cursor: pointer;
+  position: relative;
+  border: none;
+  background: none;
+  transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition-duration: 400ms;
+}
+
+
+.navbar__login-btn::after {
+  content: "";
+  pointer-events: none;
+  bottom: 2px;
+  left: 50%;
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  background-color: black;
+  transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition-duration: 400ms;
+  transition-property: width, left;
+}
+
+.navbar__login-btn:focus::after,
+.navbar__login-btn:hover::after {
+  width: 70%;
+  left: 16%;
+}
+
+.navbar__signup-btn {
+  border: 3px solid black;
+  box-shadow: 4px 4px black;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.navbar__signup-btn:hover{
+    background-color: #A4E473;
+    transition-duration: 500ms;
+    transition-property: background-color;
+}
