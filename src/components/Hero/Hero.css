@@ -7,7 +7,7 @@
 
 .hero-writeup {
   display: flex;
-  padding:0 3rem;
+  padding: 0 3rem;
   flex-direction: column;
   align-items: flex-start;
   gap: 1rem;
@@ -17,9 +17,8 @@
 .hero-title {
   font-size: 4rem;
   font-weight: 700;
-  padding-bottom: .5rem;
+  padding-bottom: 0.5rem;
   color: #004651;
-
 }
 
 .hero-subtitle {
@@ -52,18 +51,23 @@
   transition-property: background-color, box-shadow, top, left;
 }
 
-.hero-image{
-    padding-right: 3rem;
+.hero-image {
+  padding-right: 3rem;
+  flex: 1 1 50%;
+}
+
+.hero-image img {
+  width: 100%
 }
 
 @media screen and (max-width: 1440px) {
-    .hero-title{
-        font-size: 2.5rem;
-    }
-    .hero-subtitle{
-        font-size: 1.5rem;
-    }
-    .hero-cta{
-        font-size: 1rem;
-    }
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  .hero-subtitle {
+    font-size: 1.5rem;
+  }
+  .hero-cta {
+    font-size: 1rem;
+  }
 }
