@@ -111,3 +111,12 @@
     left: -1px;
     transition-property: background-color, box-shadow, top, left;
   }
+
+  @media screen and (max-width: 480px) {
+    .edu-btns button{
+        font-size: .6rem;
+    }
+    .education-fields-container button {
+        font-size: .8rem;
+    }
+  }
