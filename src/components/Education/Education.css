@@ -1,0 +1,113 @@
+.edu-heading{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.edu-btns{
+    display: flex;
+    gap: 1rem;
+}
+
+.edu-btns button{
+    padding:.25rem 0.5rem ;
+  position: relative;
+  background-color: transparent;
+  font-weight: 600;
+  font-size: 1rem;
+  border: 2px solid black;
+  box-shadow: 3px 3px black;
+  cursor: pointer;
+  top: 0px;
+  left: 0px;
+  transition: all 400ms ease;
+  margin: 0.5rem 0;
+  border-radius: 5px;
+  justify-self: start;
+}
+
+.edu-btns button:hover {
+    background-color: #004651;
+    transition-duration: 500ms;
+    box-shadow: 4px 4px black;
+    color: white;
+    top: -1px;
+    left: -1px;
+    transition-property: background-color, box-shadow, top, left;
+  }
+
+.education-fields{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border: 2px solid black;
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+.education-fields-container{
+    width: 100%;
+}
+
+.edu-inputFields-wrapper{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    column-gap: 3rem;
+    width: 100%;
+}
+
+.edu-inputFields-wrapper div{
+    display: flex;
+    flex-direction: column;
+}
+
+.edu-inputFields-wrapper div label{
+    font-family: "Lato", sans-serif;
+    margin: 0.5rem 0;
+    font-weight: 600;
+    
+}
+
+.edu-inputFields-wrapper div input{
+    font-family: "Lato", sans-serif;
+    border: 2px solid black;
+    padding: 0.5rem 1rem;
+    margin-bottom: 1rem;
+    outline: none;
+    font-size: 1rem;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.edu-inputFields-wrapper div input:focus {
+    box-shadow: 4px 4px black;
+    transition: all 400ms ease;
+  }
+
+  .education-fields-container button{
+    padding:.25rem 0.5rem ;
+  position: relative;
+  background-color: transparent;
+  font-weight: 600;
+  font-size: 1rem;
+  border: 2px solid black;
+  box-shadow: 3px 3px black;
+  cursor: pointer;
+  top: 0px;
+  left: 0px;
+  transition: all 400ms ease;
+  margin: 0.5rem 0;
+  border-radius: 5px;
+  justify-self: start;
+}
+
+.education-fields-container button:hover {
+    background-color:#A4E473;
+    transition-duration: 500ms;
+    box-shadow: 4px 4px black;
+    color: black;
+    top: -1px;
+    left: -1px;
+    transition-property: background-color, box-shadow, top, left;
+  }
