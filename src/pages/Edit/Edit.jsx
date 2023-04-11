@@ -124,7 +124,7 @@ export const Edit = () => {
             <Experience/>
             
             <Education />
-            <h2>Projects</h2>
+            
             <Projects />
           </div>
         </div>
