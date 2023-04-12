@@ -12,6 +12,27 @@ export const Login = () => {
   const [password, setPassword] = useState("");
   const { username, setUsername } = useAuth();
 
+  // const loginHandler = async () => {
+  //   try {
+  //     const data = await signInWithEmailAndPassword(auth, email, password);
+  //     console.log(data);
+  //     const loginRef = doc(db, "users", data.user.uid);
+  //     const loginDocSnap = await getDoc(loginRef);
+  //     console.log(loginRef);
+  //     console.log(loginDocSnap.data().username);
+  //     console.log(data.user.uid);
+  //     setUsername(
+  //       localStorage.setItem("username", loginDocSnap.data().username)
+  //     );
+  //     localStorage.setItem("userID", data.user.uid);
+  //     if (loginDocSnap.exists()) {
+  //       navigate(`/${username}`);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
   const loginHandler = async () => {
     try {
       const data = await signInWithEmailAndPassword(auth, email, password);
@@ -20,10 +41,8 @@ export const Login = () => {
       const loginDocSnap = await getDoc(loginRef);
       console.log(loginRef);
       console.log(loginDocSnap.data().username);
-      console.log(data.user.uid);
-      setUsername(
-        localStorage.setItem("username", loginDocSnap.data().username)
-      );
+      const username = loginDocSnap.data().username;
+      localStorage.setItem("username", username);
       localStorage.setItem("userID", data.user.uid);
       if (loginDocSnap.exists()) {
         navigate(`/${username}`);
