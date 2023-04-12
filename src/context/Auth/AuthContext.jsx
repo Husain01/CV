@@ -9,6 +9,7 @@ const AuthProvider = ({ children }) => {
   const getUserID = localStorage.getItem("userID")? localStorage.getItem("userID"): ""
 const [username, setUsername] = useState(getUserName);
 const [userID, setUserID] = useState(getUserID)
+const [userName, setuserName] = useState(getUserName)
 
 //   const checkUser = () => {
 //     const storedUsername = localStorage.getItem("username");
@@ -24,7 +25,7 @@ const [userID, setUserID] = useState(getUserID)
 //   }, [userID]);
 
   return (
-    <AuthContext.Provider value={{ username, setUsername, userID, setUserID }}>
+    <AuthContext.Provider value={{ username, setUsername, userID, setUserID, userName,setuserName }}>
       {children}
     </AuthContext.Provider>
   );
